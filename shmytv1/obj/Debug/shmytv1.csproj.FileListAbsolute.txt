@@ -1,0 +1,14 @@
+C:\Users\SHMYT\source\repos\shmytv1\shmytv1\bin\Debug\Form1.resx
+C:\Users\SHMYT\source\repos\shmytv1\shmytv1\bin\Debug\Form1.cs
+C:\Users\SHMYT\source\repos\shmytv1\shmytv1\bin\Debug\Form1.Designer.cs
+C:\Users\SHMYT\source\repos\shmytv1\shmytv1\bin\Debug\shmytv1.exe.config
+C:\Users\SHMYT\source\repos\shmytv1\shmytv1\bin\Debug\shmytv1.exe
+C:\Users\SHMYT\source\repos\shmytv1\shmytv1\bin\Debug\shmytv1.pdb
+C:\Users\SHMYT\source\repos\shmytv1\shmytv1\bin\Debug\Microsoft.Speech.dll
+C:\Users\SHMYT\source\repos\shmytv1\shmytv1\obj\Debug\shmytv1.csprojAssemblyReference.cache
+C:\Users\SHMYT\source\repos\shmytv1\shmytv1\obj\Debug\shmytv1.Form1.resources
+C:\Users\SHMYT\source\repos\shmytv1\shmytv1\obj\Debug\shmytv1.Properties.Resources.resources
+C:\Users\SHMYT\source\repos\shmytv1\shmytv1\obj\Debug\shmytv1.csproj.GenerateResource.cache
+C:\Users\SHMYT\source\repos\shmytv1\shmytv1\obj\Debug\shmytv1.csproj.CopyComplete
+C:\Users\SHMYT\source\repos\shmytv1\shmytv1\obj\Debug\shmytv1.exe
+C:\Users\SHMYT\source\repos\shmytv1\shmytv1\obj\Debug\shmytv1.pdb
