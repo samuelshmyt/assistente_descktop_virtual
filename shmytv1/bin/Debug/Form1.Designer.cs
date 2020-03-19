@@ -63,8 +63,6 @@
             this.ClientSize = new System.Drawing.Size(384, 361);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.progressBar1);
-            this.MaximumSize = new System.Drawing.Size(400, 400);
-            this.MinimumSize = new System.Drawing.Size(400, 400);
             this.Name = "Form1";
             this.Text = "SHMYT";
             this.TransparencyKey = System.Drawing.Color.Chartreuse;

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 using Microsoft.Speech.Recognition;//houve
 
 
@@ -23,6 +24,42 @@ namespace shmytv1
         {
             InitializeComponent();
         }
+        private void Normalwindow()
+        {
+            if (this.WindowState == FormWindowState.Maximized || this.WindowState == FormWindowState.Minimized)
+            {
+                this.WindowState = FormWindowState.Normal;
+                SPEAKER.Speak("Normalizando a janela", "como quiser", "tudo bem", "Vou fazer isto");
+            }
+            else
+            {
+                SPEAKER.Speak("já está Normalizada", "a janela já está Normalizada", "já fiz isso");
+            }
+        }
+        private void Maximawindow()
+        {
+            if (this.WindowState == FormWindowState.Normal || this.WindowState == FormWindowState.Minimized)
+            {
+                this.WindowState = FormWindowState.Maximized;
+                SPEAKER.Speak("Maximizando a janela", "como quiser", "tudo bem", "Vou fazer isto");
+            }
+            else
+            {
+                SPEAKER.Speak("já está maximizado", "a janela já está maximizada", "já fiz isso");
+            }
+        }
+        private void Minimizewindow()
+        {
+            if (this.WindowState == FormWindowState.Normal || this.WindowState == FormWindowState.Maximized)
+            {
+                this.WindowState = FormWindowState.Minimized;
+                SPEAKER.Speak("minimizando a janela", "como quiser", "tudo bem", "Vou fazer isto");
+            }
+            else
+            {
+                SPEAKER.Speak("já está minimizada", "a janela já está minimizada", "já fiz isso");
+            }
+        }
         private void audioLevel(object s, AudioLevelUpdatedEventArgs e)
         {
             this.progressBar1.Maximum = 100;
@@ -35,20 +72,24 @@ namespace shmytv1
         // metodo que é chamado quando algo é reconhecido
         private void rec(object s, SpeechRecognizedEventArgs e)
         {
+            Runner r = new Runner();
             //MessageBox.Show(e.Result.Text);
             string speech = e.Result.Text; // string reconecida
             float conf = e.Result.Confidence;
-
+            // criar log
+            // ***********************************************                     
             if(conf > 0.35f)
             {
                 
                 this.label1.ForeColor = Color.Yellow;
                 if(GrammarRules.ShmytStopListening.Any(x => x == speech))
                 {
+                    r.setresposta("mandou parar");
                     isShymtListering = false;
                 }
                 else if (GrammarRules.ShmytStartListening.Any(x => x == speech))
                 {
+                    r.setresposta("mandou continuar");
                     isShymtListering = true;
                 } else if (isShymtListering == true)
                 {
@@ -64,25 +105,56 @@ namespace shmytv1
                             {
                                 Runner.WhatDateIS();
                             }
+                            else if (GrammarRules.MinimizeWindow.Any(x => x == speech))
+                            {
+                               Minimizewindow();
+                            }
+                            else if (GrammarRules.MaximizaWindow.Any(x => x == speech))
+                            {
+                                Maximawindow();
+                            }
+                            else if (GrammarRules.NormalizaWindow.Any(x => x == speech))
+                            {
+                                Normalwindow();
+                            }
                             break;
                     }
                 }
                
             }
+
+            //********************************************************************************************************************
+            string date = DateTime.Now.Day.ToString() + "-" + DateTime.Now.Month.ToString() + "-" + DateTime.Now.Year.ToString();
+            string log_filename = "log\\" + date + ".txt";
+
+            StreamWriter sw = File.AppendText(log_filename);
+
+            if (File.Exists(log_filename))
+            {
+                sw.WriteLine(speech + "=" + r.resposta());
+            }
+            else
+            {
+                sw.WriteLine(speech + "=" + r.resposta());
+
+            }
+            sw.Close();
+
             // else
             //{
             // this.label1.ForeColor = Color.White;
             //}
-           // this.label1.ForeColor = Color.White;
+            // this.label1.ForeColor = Color.White;
         }
 
         private void LoadSpeech()
         {
             try
             {
+               
                 engine = new SpeechRecognitionEngine();// instancia
                 engine.SetInputToDefaultAudioDevice();// microfone
-                string[] words = { "olá", "boa noite" };
+               // string[] words = { "olá", "boa noite" };
                  // video 03
                 Choices c_commandsOfSystem = new Choices();
                 c_commandsOfSystem.Add(GrammarRules.WhatTimeIS.ToArray());
@@ -90,6 +162,10 @@ namespace shmytv1
                 // comando pare de ouvir e o comando pra voltar a ouvir ->> shmyt
                 c_commandsOfSystem.Add(GrammarRules.ShmytStopListening.ToArray());
                 c_commandsOfSystem.Add(GrammarRules.ShmytStartListening.ToArray());
+                c_commandsOfSystem.Add(GrammarRules.MinimizeWindow.ToArray());
+                c_commandsOfSystem.Add(GrammarRules.MaximizaWindow.ToArray());
+                c_commandsOfSystem.Add(GrammarRules.NormalizaWindow.ToArray());
+
 
                 GrammarBuilder gb_comandOfSystem = new GrammarBuilder();// 4:22
                 gb_comandOfSystem.Append(c_commandsOfSystem);
@@ -107,11 +183,11 @@ namespace shmytv1
                 //barra de progresso
                 engine.AudioLevelUpdated += new EventHandler<AudioLevelUpdatedEventArgs>(audioLevel);
                // engine.SpeechRecognitionRejected += new EventHandler<SpeechRecognitionRejectedEventArgs>(rej);
-                // engine.SpeechRecognitionRejected += new EventHandler<SpeechRecognitionRejectedEventArgs>(rej);
+                //engine.SpeechRecognitionRejected += new EventHandler<SpeechRecognitionRejectedEventArgs>(rej);
                 // inicia o reconhecimento
                 engine.RecognizeAsync(RecognizeMode.Multiple);
 
-                //SPEAKER.Speak("estou carregando as configurações");
+                SPEAKER.Speak("estou carregando as configurações");
             }
             catch (Exception ex)
             {
@@ -121,8 +197,9 @@ namespace shmytv1
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            
             LoadSpeech();
-            SPEAKER.Speak("já carreguei os arquivos, estou pronto");
+            SPEAKER.Speak("Estou pronta");
         }
 
     }

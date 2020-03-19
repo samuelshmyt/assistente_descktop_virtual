@@ -13,7 +13,7 @@ namespace shmytv1
         "Me diga as horas",
         "Poderia me dizer que horas são",
         "Poderia me dizer que as horas",
-        "as horas"
+        "a"
         };
         public static IList<string> WhatDateIS = new List<string>()
         {
@@ -32,6 +32,25 @@ namespace shmytv1
            "Pare de ouvir",
            "Pare de me ouvir",
            "Fique quieto"
+        };
+        // comandos
+        public static IList<string> MinimizeWindow = new List<string>()
+        {
+           "Minimizar Janela",
+           "Minimize a Janela",
+           "Tamanho Minimo"
+        };
+        public static IList<string> MaximizaWindow = new List<string>()
+        {
+           "Maximiza Janela",
+           "Maximiza a Janela",
+           "Tamanho Maximo"
+        };
+        public static IList<string> NormalizaWindow = new List<string>()
+        {
+           "Normaliza Janela",
+           "Normaliza a Janela",
+           "Tamanho normal"
         };
     }
 }

@@ -16,5 +16,11 @@ namespace shmytv1
             sp.SpeakAsync(text);
         }
 
+        public static void Speak(params string[] texts)
+        {
+            Random rnd = new Random();
+            Speak(texts[rnd.Next(0, texts.Length)]);
+        }
+
       }
 }
