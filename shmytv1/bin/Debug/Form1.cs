@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using Microsoft.Speech.Recognition;//houve
+using System.Speech.Synthesis;
 
 
 // para sintese é presiso o speechSDK.2
@@ -20,20 +21,47 @@ namespace shmytv1
         private SpeechRecognitionEngine engine; // variavel de voz 
         private bool isShymtListering = true;
         private SelecVoz selectVoice = null;
+        private SpeechSynthesizer synthesizer = new SpeechSynthesizer(); //sintetizador
+
         public Form1()
         {
             InitializeComponent();
         }
+        #region
+        private void speakStarted(object s, SpeakStartedEventArgs e)
+        {
+            LBLShmyt.Text = "Sistema: -";
+        }
+        private void speakProgress(object s, SpeakProgressEventArgs e)
+        {
+            LBLShmyt.Text += e.Text + " ";
+        }
+        
+        
+        private void Speak(String text)
+        {
+            synthesizer.SpeakAsync(text);
+
+        }
+        private void SpeakRand(params string[] texts)
+        {
+            Random r = new Random();
+            Speak(texts[r.Next(0, texts.Length)]);
+
+
+        } 
+
+        #endregion
         private void Normalwindow()
         {
             if (this.WindowState == FormWindowState.Maximized || this.WindowState == FormWindowState.Minimized)
             {
                 this.WindowState = FormWindowState.Normal;
-                SPEAKER.Speak("Normalizando a janela", "como quiser", "tudo bem", "Vou fazer isto");
+                Speak("Normalizando a janela");//, "como quiser", "tudo bem", "Vou fazer isto");
             }
             else
             {
-                SPEAKER.Speak("já está Normalizada", "a janela já está Normalizada", "já fiz isso");
+                Speak("já está Normalizada");//, "a janela já está Normalizada", "já fiz isso");
             }
         }
         private void Maximawindow()
@@ -41,11 +69,11 @@ namespace shmytv1
             if (this.WindowState == FormWindowState.Normal || this.WindowState == FormWindowState.Minimized)
             {
                 this.WindowState = FormWindowState.Maximized;
-                SPEAKER.Speak("Maximizando a janela", "como quiser", "tudo bem", "Vou fazer isto");
+                Speak("Maximizando a janela");//, "como quiser", "tudo bem", "Vou fazer isto");
             }
             else
             {
-                SPEAKER.Speak("já está maximizado", "a janela já está maximizada", "já fiz isso");
+                Speak("já está maximizado");//, "a janela já está maximizada", "já fiz isso");
             }
         }
         private void Minimizewindow()
@@ -53,11 +81,11 @@ namespace shmytv1
             if (this.WindowState == FormWindowState.Normal || this.WindowState == FormWindowState.Maximized)
             {
                 this.WindowState = FormWindowState.Minimized;
-                SPEAKER.Speak("minimizando a janela", "como quiser", "tudo bem", "Vou fazer isto");
+                Speak("minimizando a janela");//, "como quiser", "tudo bem", "Vou fazer isto");
             }
             else
             {
-                SPEAKER.Speak("já está minimizada", "a janela já está minimizada", "já fiz isso");
+                Speak("já está minimizada");//, "a janela já está minimizada", "já fiz isso");;
             }
         }
         private void audioLevel(object s, AudioLevelUpdatedEventArgs e)
@@ -65,7 +93,7 @@ namespace shmytv1
             this.progressBar1.Maximum = 100;
             this.progressBar1.Value = e.AudioLevel;
         }
-        public void rej(object s, SpeechRecognizedEventArgs e)
+        public void rej(object s, SpeechRecognitionRejectedEventArgs e)
         {
             this.label1.ForeColor = Color.Red;
         }
@@ -87,13 +115,13 @@ namespace shmytv1
                 {
                     r.setresposta("mandou parar");
                     isShymtListering = false;
-                    SPEAKER.Speak("Sistema desligado", "Tá bem, desliquei", "Ok quando quiser é so chamar");
+                    Speak("Sistema desligado");//, "Tá bem, desliquei", "Ok quando quiser é so chamar");
                 }
                 else if (GrammarRules.ShmytStartListening.Any(x => x == speech))
                 {
                     r.setresposta("mandou continuar");
                     isShymtListering = true;
-                    SPEAKER.Speak("Sim mestre, o que deseja", "Pronta pra te atender", "Tava dormindo, diga o que mandas");
+                    Speak("Sim mestre, o que deseja");//, "Pronta pra te atender", "Tava dormindo, diga o que mandas");
                 } else if (isShymtListering == true)
                 {
                     switch (e.Result.Grammar.Name)
@@ -186,13 +214,22 @@ namespace shmytv1
 
 
                 // carregar gramatica substituido por choise 
-               // engine.LoadGrammar(new Grammar(new GrammarBuilder(new Choices(words))));
+                // engine.LoadGrammar(new Grammar(new GrammarBuilder(new Choices(words))));
                 // Chamar o evento do reconhecimento comentado pelo video 03
+               
+                #region SpeechRecognition Events 
                 engine.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(rec);
                 //barra de progresso
                 engine.AudioLevelUpdated += new EventHandler<AudioLevelUpdatedEventArgs>(audioLevel);
-               // engine.SpeechRecognitionRejected += new EventHandler<SpeechRecognitionRejectedEventArgs>(rej);
+                engine.SpeechRecognitionRejected += new EventHandler<SpeechRecognitionRejectedEventArgs>(rej);
                 //engine.SpeechRecognitionRejected += new EventHandler<SpeechRecognitionRejectedEventArgs>(rej);
+                #endregion 
+
+                #region SpeechRecognition Events 
+                synthesizer.SpeakStarted += new EventHandler<SpeakStartedEventArgs>(speakStarted);
+                synthesizer.SpeakProgress += new EventHandler<SpeakProgressEventArgs>(speakProgress);
+                #endregion 
+
                 // inicia o reconhecimento
                 engine.RecognizeAsync(RecognizeMode.Multiple);
 
@@ -204,6 +241,12 @@ namespace shmytv1
             }
 
         }
+
+        private void Synthesizer_SpeakStarted(object sender, SpeakStartedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             
