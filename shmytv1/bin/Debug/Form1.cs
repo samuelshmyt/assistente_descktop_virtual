@@ -19,7 +19,7 @@ namespace shmytv1
     {
         private SpeechRecognitionEngine engine; // variavel de voz 
         private bool isShymtListering = true;
-
+        private SelecVoz selectVoice = null;
         public Form1()
         {
             InitializeComponent();
@@ -78,6 +78,7 @@ namespace shmytv1
             float conf = e.Result.Confidence;
             // criar log
             // ***********************************************                     
+            this.label1.Text = ":>" + speech;
             if(conf > 0.35f)
             {
                 
@@ -86,11 +87,13 @@ namespace shmytv1
                 {
                     r.setresposta("mandou parar");
                     isShymtListering = false;
+                    SPEAKER.Speak("Sistema desligado", "Tá bem, desliquei", "Ok quando quiser é so chamar");
                 }
                 else if (GrammarRules.ShmytStartListening.Any(x => x == speech))
                 {
                     r.setresposta("mandou continuar");
                     isShymtListering = true;
+                    SPEAKER.Speak("Sim mestre, o que deseja", "Pronta pra te atender", "Tava dormindo, diga o que mandas");
                 } else if (isShymtListering == true)
                 {
                     switch (e.Result.Grammar.Name)
@@ -116,6 +119,12 @@ namespace shmytv1
                             else if (GrammarRules.NormalizaWindow.Any(x => x == speech))
                             {
                                 Normalwindow();
+                            }
+                            else if (GrammarRules.ChangeVoice.Any(x => x == speech))
+                            {
+                                //if(selectVoice == null)
+                                selectVoice = new SelecVoz();
+                                selectVoice.Show();
                             }
                             break;
                     }
@@ -165,7 +174,7 @@ namespace shmytv1
                 c_commandsOfSystem.Add(GrammarRules.MinimizeWindow.ToArray());
                 c_commandsOfSystem.Add(GrammarRules.MaximizaWindow.ToArray());
                 c_commandsOfSystem.Add(GrammarRules.NormalizaWindow.ToArray());
-
+                c_commandsOfSystem.Add(GrammarRules.ChangeVoice.ToArray());
 
                 GrammarBuilder gb_comandOfSystem = new GrammarBuilder();// 4:22
                 gb_comandOfSystem.Append(c_commandsOfSystem);

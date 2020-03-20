@@ -12,3 +12,4 @@ C:\Users\SHMYT\source\repos\shmytv1\shmytv1\obj\Debug\shmytv1.csproj.GenerateRes
 C:\Users\SHMYT\source\repos\shmytv1\shmytv1\obj\Debug\shmytv1.csproj.CopyComplete
 C:\Users\SHMYT\source\repos\shmytv1\shmytv1\obj\Debug\shmytv1.exe
 C:\Users\SHMYT\source\repos\shmytv1\shmytv1\obj\Debug\shmytv1.pdb
+C:\Users\SHMYT\source\repos\shmytv1\shmytv1\obj\Debug\shmytv1.SelecVoz.resources

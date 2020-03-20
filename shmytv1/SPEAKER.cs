@@ -22,5 +22,18 @@ namespace shmytv1
             Speak(texts[rnd.Next(0, texts.Length)]);
         }
 
+        public static void SetVoice (string voice)
+        {
+            try
+            {
+                sp.SelectVoice(voice);
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show("Erro em class Speaker" + ex.Message);
+            }
+            
+        }
+
       }
 }
