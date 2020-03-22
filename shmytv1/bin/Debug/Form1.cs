@@ -177,8 +177,8 @@ namespace shmytv1
                                     case "Abrir arquivo":
                                         if (mediaPlay != null)
                                         {
-                                            mediaPlay.OpenFile();
                                             Speak("Selecione um arquivo");
+                                            mediaPlay.OpenFile();
                                         } else
                                         {
                                             Speak("Media player não está aberto");
@@ -186,6 +186,9 @@ namespace shmytv1
                                         break;
                                 }
                             }
+                            break;
+                        case "calc":
+                            Speak(CalcSolver.solver(speech));
                             break;
                     }
                 }
@@ -223,8 +226,16 @@ namespace shmytv1
                
                 engine = new SpeechRecognitionEngine();// instancia
                 engine.SetInputToDefaultAudioDevice();// microfone
-               // string[] words = { "olá", "boa noite" };
-                 // video 03
+                                                      // string[] words = { "olá", "boa noite" };
+                                                      // Operações
+                Choices c_numero = new Choices();
+                for (int i=0; i <= 100; i++)
+                {
+                    c_numero.Add(i.ToString());
+                }
+                
+
+                // video 03
                 Choices c_commandsOfSystem = new Choices();
                 c_commandsOfSystem.Add(GrammarRules.WhatTimeIS.ToArray());
                 c_commandsOfSystem.Add(GrammarRules.WhatDateIS.ToArray());
@@ -246,11 +257,19 @@ namespace shmytv1
 
                 engine.LoadGrammar(g_comandsOfSystem);//carrega gramatica na memoria
 
+                // gramabuilder numeros
+                GrammarBuilder gb_number = new GrammarBuilder();
+                gb_number.Append(c_numero);
+                gb_number.Append(new Choices("mais", "menos", "vezes", "por"));
+                gb_number.Append(c_numero);
 
+                Grammar g_numero = new Grammar(gb_number);
+                g_numero.Name = "calc";
+                engine.LoadGrammar(g_numero);
                 // carregar gramatica substituido por choise 
                 // engine.LoadGrammar(new Grammar(new GrammarBuilder(new Choices(words))));
                 // Chamar o evento do reconhecimento comentado pelo video 03
-               
+
                 #region SpeechRecognition Events 
                 engine.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(rec);
                 //barra de progresso
