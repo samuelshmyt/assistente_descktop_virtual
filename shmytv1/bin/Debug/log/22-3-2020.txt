@@ -1,0 +1,9 @@
+Navegador=
+MediaPlay=
+Abrir arquivo=
+MediaPlay=
+Navegador=
+Video=
+Abrir arquivo=
+Abrir arquivo=
+Abrir arquivo=

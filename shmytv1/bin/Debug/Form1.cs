@@ -22,6 +22,8 @@ namespace shmytv1
         private bool isShymtListering = true;
         private SelecVoz selectVoice = null;
         private SpeechSynthesizer synthesizer = new SpeechSynthesizer(); //sintetizador
+        private Browser browser;
+        private Video mediaPlay;
 
         public Form1()
         {
@@ -138,7 +140,7 @@ namespace shmytv1
                             }
                             else if (GrammarRules.MinimizeWindow.Any(x => x == speech))
                             {
-                               Minimizewindow();
+                                Minimizewindow();
                             }
                             else if (GrammarRules.MaximizaWindow.Any(x => x == speech))
                             {
@@ -153,6 +155,36 @@ namespace shmytv1
                                 //if(selectVoice == null)
                                 selectVoice = new SelecVoz();
                                 selectVoice.Show();
+                            }
+                            else if (GrammarRules.OpenProgram.Any(x => x == speech))
+                            {
+                                switch (speech)
+                                {
+                                    case "Navegador":
+                                        browser = new Browser();
+                                        browser.Show();
+                                        break;
+                                    case "Video":
+                                        mediaPlay = new Video();
+                                        mediaPlay.Show();
+                                        break;
+                                }
+                            }
+                            else if (GrammarRules.MediaPlayComands.Any(x => x == speech))
+                            {
+                                switch (speech)
+                                {
+                                    case "Abrir arquivo":
+                                        if (mediaPlay != null)
+                                        {
+                                            mediaPlay.OpenFile();
+                                            Speak("Selecione um arquivo");
+                                        } else
+                                        {
+                                            Speak("Media player não está aberto");
+                                        }
+                                        break;
+                                }
                             }
                             break;
                     }
@@ -203,6 +235,8 @@ namespace shmytv1
                 c_commandsOfSystem.Add(GrammarRules.MaximizaWindow.ToArray());
                 c_commandsOfSystem.Add(GrammarRules.NormalizaWindow.ToArray());
                 c_commandsOfSystem.Add(GrammarRules.ChangeVoice.ToArray());
+                c_commandsOfSystem.Add(GrammarRules.OpenProgram.ToArray());
+                c_commandsOfSystem.Add(GrammarRules.MediaPlayComands.ToArray());
 
                 GrammarBuilder gb_comandOfSystem = new GrammarBuilder();// 4:22
                 gb_comandOfSystem.Append(c_commandsOfSystem);

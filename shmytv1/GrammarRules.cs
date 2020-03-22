@@ -42,7 +42,12 @@ namespace shmytv1
         };
         public static IList<string> OpenProgram = new List<string>()
         {
-            "Navegador"
+            "Navegador",
+            "Video"
+        };
+        public static IList<string> MediaPlayComands = new List<string>()
+        {
+            "Abrir arquivo",
         };
     }
 }

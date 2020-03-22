@@ -13,3 +13,10 @@ C:\Users\SHMYT\source\repos\shmytv1\shmytv1\obj\Debug\shmytv1.csproj.CopyComplet
 C:\Users\SHMYT\source\repos\shmytv1\shmytv1\obj\Debug\shmytv1.exe
 C:\Users\SHMYT\source\repos\shmytv1\shmytv1\obj\Debug\shmytv1.pdb
 C:\Users\SHMYT\source\repos\shmytv1\shmytv1\obj\Debug\shmytv1.SelecVoz.resources
+C:\Users\SHMYT\source\repos\shmytv1\shmytv1\bin\Debug\Interop.WMPLib.dll
+C:\Users\SHMYT\source\repos\shmytv1\shmytv1\bin\Debug\AxInterop.WMPLib.dll
+C:\Users\SHMYT\source\repos\shmytv1\shmytv1\obj\Debug\Interop.WMPLib.dll
+C:\Users\SHMYT\source\repos\shmytv1\shmytv1\obj\Debug\AxInterop.WMPLib.dll
+C:\Users\SHMYT\source\repos\shmytv1\shmytv1\obj\Debug\shmytv1.csproj.ResolveComReference.cache
+C:\Users\SHMYT\source\repos\shmytv1\shmytv1\obj\Debug\shmytv1.Browser.resources
+C:\Users\SHMYT\source\repos\shmytv1\shmytv1\obj\Debug\shmytv1.Video.resources
