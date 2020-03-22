@@ -40,5 +40,9 @@ namespace shmytv1
         {
            "Alterar voz"
         };
+        public static IList<string> OpenProgram = new List<string>()
+        {
+            "Navegador"
+        };
     }
 }

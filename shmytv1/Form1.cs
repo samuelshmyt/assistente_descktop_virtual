@@ -22,6 +22,7 @@ namespace shmytv1
         private bool isShymtListering = true;
         private SelecVoz selectVoice = null;
         private SpeechSynthesizer synthesizer = new SpeechSynthesizer(); //sintetizador
+        private Browser browser;
 
         public Form1()
         {
@@ -154,6 +155,16 @@ namespace shmytv1
                                 selectVoice = new SelecVoz();
                                 selectVoice.Show();
                             }
+                            else if (GrammarRules.OpenProgram.Any(x => x == speech))
+                            {
+                                switch (speech)
+                                {
+                                    case "Navegador":
+                                        browser = new Browser();
+                                        browser.Show();
+                                        break;
+                                }
+                            }
                             break;
                     }
                 }
@@ -203,6 +214,7 @@ namespace shmytv1
                 c_commandsOfSystem.Add(GrammarRules.MaximizaWindow.ToArray());
                 c_commandsOfSystem.Add(GrammarRules.NormalizaWindow.ToArray());
                 c_commandsOfSystem.Add(GrammarRules.ChangeVoice.ToArray());
+                c_commandsOfSystem.Add(GrammarRules.OpenProgram.ToArray());
 
                 GrammarBuilder gb_comandOfSystem = new GrammarBuilder();// 4:22
                 gb_comandOfSystem.Append(c_commandsOfSystem);
